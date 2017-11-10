@@ -1,13 +1,13 @@
 # RedisCluster Setup
 
-1. Install redis and create nodes
+## 1. Install redis and create nodes
 
-1.1 Cluster Structure
+ ### 1.1 Cluster Structure
 Master node A: 0 ~ 5460
 Master node B: 5461 ~ 10922
 Master node C: 10923 ~ 16383
 
-1.2 Install redis
+ ### 1.2 Install redis
 Admins-MBP:redis-4.0.2 jay$ tar xzf redis-4.0.2.tar.gz  
 Admins-MBP:redis-4.0.2 jay$ cd redis-4.0.2 
 Admins-MBP:redis-4.0.2 jay$ make  
@@ -25,7 +25,7 @@ Modify redis.conf in redis01:
         cluster-node-timeout 15000
         appendonly yes
 
-1.3 Create nodes
+### 1.3 Create nodes
 Create 6 copies and modify port number.
 Copy src/redis-trib.rb from redis original folder
 
@@ -45,20 +45,20 @@ drwxr-xr-x  12 jay  bidder    408 Nov  9 16:17 redis02
 drwxr-xr-x  12 jay  bidder    408 Nov  9 16:17 redis03
 ```
 
-2. Install Dependencies
-2.1 install ruby:
+## 2. Install Dependencies
+### 2.1 install ruby:
 Admins-MBP:redis-4.0.2 jay$ yum install ruby  
 Admins-MBP:redis-4.0.2 jay$ yum install rubygems
  
-2.2 install dependency redis-3.2.2.gem, it is needed when run redis-trib.rb.
+### 2.2 install dependency redis-3.2.2.gem, it is needed when run redis-trib.rb.
 href="https://rubygems.global.ssl.fastly.net/gems/redis-3.2.2.gem"
 
 Admins-MBP:redis-4.0.2 jay$ gem install redis-3.2.2.gem  
 
 
-3. Start Nodes
+## 3. Start Nodes
 
-3.1 Start all nodes
+### 3.1 Start all nodes
 Admins-MBP:redis-cluster jay$ cat start-all.sh
 cd redis01
 ./redis-server redis.conf
@@ -91,7 +91,7 @@ root             27657   0.0  0.0  2476184   1304   ??  Ss   Mon11AM   2:21.78 .
 ```
 
 
-4. Create and Start Cluster
+## 4. Create and Start Cluster
 
 ```
 Admins-MBP:redis-cluster jay$ ./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 
@@ -153,11 +153,11 @@ S: bbd4de25cad21c57459078a705d3b90e2f59bb88 127.0.0.1:7004
 
 
 5. Testing
-
+```
 case01: set value and get value from one node
 case02: set value and get value from another node
 case03: set value and bring down one node, test slave node   
-
+```
 
 
 ```
@@ -166,6 +166,36 @@ pkill -9 redis
 ps auwx|grep redis
 ```
 
+
+## JRedis Examples
+```
+		JedisCluster cluster = RedisClusterDemo.getRedisCluster();
+		
+		//remove old data
+		cluster.del("setJerseyNumbers");
+		cluster.del("listJerseyNumbers");
+		
+		System.out.println("-- Setting values");
+		cluster.set("team", "warriors");
+		cluster.set("player", "Stephen Curry");
+		
+		System.out.println("----- 1. Sets");
+		cluster.sadd("setJerseyNumbers", "30");
+		cluster.sadd("setJerseyNumbers", "11");
+		cluster.sadd("setJerseyNumbers", "23");
+		Set<String> setJerseyNumbers = cluster.smembers("setJerseyNumbers");
+		
+		
+		System.out.println("----- 2. Lists");
+		cluster.lpush("listJerseyNumbers", "30");
+		cluster.lpush("listJerseyNumbers", "11");
+		cluster.lpush("listJerseyNumbers", "23");
+//		String listJerseyNumbers = cluster.rpop("listJerseyNumbers");
+		List<String> allNumbers = cluster.lrange("listJerseyNumbers", 0, -1);
+		
+		System.out.println("----- 3. Sorted Sets");
+  //To be Continued
+```
 
 
 
