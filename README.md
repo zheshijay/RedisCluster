@@ -1,4 +1,4 @@
-# RedisCluster Setup
+# Redis Cluster Setup
 
 ## 1. Install redis and create nodes
 
