@@ -82,7 +82,7 @@ cd redis06
 ./redis-server redis.conf
 cd ..
 
-3.2 Make sure all nodes started
+### 3.2 Make sure all nodes started
 ```
 Admins-MBP:redis-cluster jay$ ps auwx|grep redis
 root             28075   0.1  0.0  2478236   1216   ??  Ss   Mon02PM   1:58.56 ./redis-server 127.0.0.1:7002 [cluster]
@@ -97,9 +97,6 @@ root             27657   0.0  0.0  2476184   1304   ??  Ss   Mon11AM   2:21.78 .
 ## 4. Create and Start Cluster
 
 ```
-Admins-MBP:redis-cluster jay$ ./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 
-
-
 Admins-MBP:redis-cluster jay$ sudo ./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006
 >>> Creating cluster
 /usr/local/lib/ruby/gems/2.4.0/gems/redis-3.2.2/lib/redis/client.rb:441: warning: constant ::Fixnum is deprecated
