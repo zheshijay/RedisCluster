@@ -3,9 +3,12 @@
 ## 1. Install redis and create nodes
 
  ### 1.1 Cluster Structure
+
+```
 Master node A: 0 ~ 5460
 Master node B: 5461 ~ 10922
 Master node C: 10923 ~ 16383
+```
 
  ### 1.2 Install redis
 Admins-MBP:redis-4.0.2 jay$ tar xzf redis-4.0.2.tar.gz  
@@ -51,7 +54,7 @@ Admins-MBP:redis-4.0.2 jay$ yum install ruby
 Admins-MBP:redis-4.0.2 jay$ yum install rubygems
  
 ### 2.2 install dependency redis-3.2.2.gem, it is needed when run redis-trib.rb.
-href="https://rubygems.global.ssl.fastly.net/gems/redis-3.2.2.gem"
+https://rubygems.global.ssl.fastly.net/gems/redis-3.2.2.gem
 
 Admins-MBP:redis-4.0.2 jay$ gem install redis-3.2.2.gem  
 
