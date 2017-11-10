@@ -15,6 +15,8 @@ Admins-MBP:redis-4.0.2 jay$ make install PREFIX=/usr/local/redis/redis-cluster/
 
 in redis-cluster folder, modify bin folder to redis01, and copy redis.conf from original redis folder
 
+
+
 Modify redis.conf in redis01:
  		daemonize yes #run as a daemon process
         port 7001 #assign port numbers 7001 ~ 7006
@@ -27,7 +29,7 @@ Modify redis.conf in redis01:
 Create 6 copies and modify port number.
 Copy src/redis-trib.rb from redis original folder
 
-========================================================
+```
 Admins-MBP:redis-cluster jay$ ls -ltr
 total 296
 -rwxr-xr-x@  1 jay  bidder  75776 Nov  3 11:31 redis-3.2.2.gem
@@ -41,7 +43,7 @@ drwxr-xr-x  11 jay  bidder    374 Nov  9 16:14 redis04
 drwxr-xr-x  12 jay  bidder    408 Nov  9 16:16 redis01
 drwxr-xr-x  12 jay  bidder    408 Nov  9 16:17 redis02
 drwxr-xr-x  12 jay  bidder    408 Nov  9 16:17 redis03
-========================================================
+```
 
 2. Install Dependencies
 2.1 install ruby:
@@ -78,8 +80,7 @@ cd redis06
 cd ..
 
 3.2 Make sure all nodes started
-
-========================================================
+```
 Admins-MBP:redis-cluster jay$ ps auwx|grep redis
 root             28075   0.1  0.0  2478236   1216   ??  Ss   Mon02PM   1:58.56 ./redis-server 127.0.0.1:7002 [cluster]
 root             27667   0.1  0.0  2476184   1200   ??  Ss   Mon11AM   2:19.10 ./redis-server 127.0.0.1:7006 [cluster]
@@ -87,12 +88,12 @@ root             27665   0.0  0.0  2476184   1192   ??  Ss   Mon11AM   2:21.42 .
 root             27663   0.0  0.0  2476184   1184   ??  Ss   Mon11AM   2:19.75 ./redis-server 127.0.0.1:7004 [cluster]
 root             27661   0.0  0.0  2476184   1212   ??  Ss   Mon11AM   2:21.43 ./redis-server 127.0.0.1:7003 [cluster]
 root             27657   0.0  0.0  2476184   1304   ??  Ss   Mon11AM   2:21.78 ./redis-server 
-========================================================
+```
 
 
 4. Create and Start Cluster
 
-========================================================
+```
 Admins-MBP:redis-cluster jay$ ./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 
 
 
@@ -147,7 +148,7 @@ S: bbd4de25cad21c57459078a705d3b90e2f59bb88 127.0.0.1:7004
 >>> Check for open slots...
 >>> Check slots coverage...
 [OK] All 16384 slots covered.
-========================================================
+```
 
 
 
@@ -159,11 +160,11 @@ case03: set value and bring down one node, test slave node
 
 
 
-
+```
 =========== Useful command for debug ===========
 pkill -9 redis  
 ps auwx|grep redis
-
+```
 
 
 
